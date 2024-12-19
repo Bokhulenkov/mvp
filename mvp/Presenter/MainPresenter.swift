@@ -12,15 +12,15 @@ protocol MainViewProtocol: AnyObject {
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
-    init(button: MainViewProtocol)
+    init(view: MainViewProtocol, button: CustomButtonProtocol)
 }
 
 class MainPresenter: MainViewPresenterProtocol {
-    weak var button: MainViewProtocol?
+    var view: MainViewProtocol
+    var button: CustomButtonProtocol
     
-    required init(button: MainViewProtocol) {
+    required init(view: any MainViewProtocol, button: any CustomButtonProtocol) {
+        self.view = view
         self.button = button
     }
-    
-    
 }

@@ -27,7 +27,7 @@ final class CustomButton: UIButton, CustomButtonProtocol {
         switch type {
         case .showAlert:
             self.setTitle("Показать алерт", for: .normal)
-            self.backgroundColor = .white
+            self.backgroundColor = .brown
         case .upProgress:
             self.setTitle("Увеличить прогресс", for: .normal)
             self.backgroundColor = .red
