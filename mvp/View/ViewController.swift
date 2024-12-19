@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+    
+//    MARK: - Properties
+    var presenter: MainViewPresenterProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,4 +19,3 @@ class ViewController: UIViewController {
 
 
 }
-
