@@ -28,6 +28,11 @@ final class ViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
+    
+    private lazy var alertButton = CustomButton(type: .showAlert)
+    private lazy var upButton = CustomButton(type: .upProgress)
+    private lazy var downButton = CustomButton(type: .downPorgess)
+    private lazy var backgrondButton = CustomButton(type: .changeBackground)
 
 //    MARK: - LifeCicle
     override func viewDidLoad() {
@@ -42,10 +47,10 @@ final class ViewController: UIViewController {
         view.addSubview(progressBar)
         view.addSubview(vStack)
         
-        vStack.addArrangedSubview(CustomButton(type: .showAlert))
-        vStack.addArrangedSubview(CustomButton(type: .upProgress))
-        vStack.addArrangedSubview(CustomButton(type: .downPorgess))
-        vStack.addArrangedSubview(CustomButton(type: .changeBackground))
+        vStack.addArrangedSubview(alertButton)
+        vStack.addArrangedSubview(upButton)
+        vStack.addArrangedSubview(downButton)
+        vStack.addArrangedSubview(backgrondButton)
     }
     
     private func setupConstraints() {
@@ -54,9 +59,21 @@ final class ViewController: UIViewController {
             progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            vStack.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 20),
+            vStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            vStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            alertButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            alertButton.heightAnchor.constraint(equalToConstant: 80),
+            
+            upButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            upButton.heightAnchor.constraint(equalToConstant: 80),
+            
+            downButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            downButton.heightAnchor.constraint(equalToConstant: 80),
+            
+            backgrondButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            backgrondButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
 }
