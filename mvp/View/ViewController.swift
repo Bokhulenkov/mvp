@@ -39,6 +39,12 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        setActionForButton()
+    }
+    
+    // MARK: - Actions
+    @objc private func tapedButton(_ sender: CustomButton) {
+        presenter.showNewButtonColor(button: sender)
     }
     
     // MARK: - Methods
@@ -51,6 +57,13 @@ final class ViewController: UIViewController {
         vStack.addArrangedSubview(upButton)
         vStack.addArrangedSubview(downButton)
         vStack.addArrangedSubview(backgrondButton)
+    }
+    
+    private func setActionForButton() {
+        alertButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
+        upButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
+        downButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
+        backgrondButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -76,4 +89,12 @@ final class ViewController: UIViewController {
             backgrondButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
+}
+
+extension ViewController: MainViewProtocol {
+    func setColorButtom(button: UIButton, color: UIColor) {
+        button.backgroundColor = color
+    }
+    
+    
 }

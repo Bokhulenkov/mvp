@@ -7,12 +7,7 @@
 
 import UIKit
 
-protocol CustomButtonProtocol where Self: UIButton {
-    init(type: MyButtonType)
-    func configureButton(for type: MyButtonType)
-}
-
-final class CustomButton: UIButton, CustomButtonProtocol {
+final class CustomButton: UIButton {
     
     init(type: MyButtonType) {
         super.init(frame: .zero)

@@ -5,16 +5,17 @@
 //  Created by Alexander Bokhulenkov on 19.12.2024.
 //
 
-import Foundation
+import UIKit
 
 protocol Builder: AnyObject {
-    func createMain() -> ViewController
+    static func createMain() -> UIViewController
 }
 
 class MainBuilders: Builder {
-    func createMain() -> ViewController {
+    static func createMain() -> UIViewController {
         let view = ViewController()
-//        let presenter = MainPresenter(view: any MainViewProtocol, button: any CustomButtonProtocol)
+        let presenter = MainPresenter(view: view)
+        view.presenter = presenter
         return view
     }
 }
