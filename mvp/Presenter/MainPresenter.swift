@@ -30,12 +30,15 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func showNewButtonColor(button: UIButton) {
-        view.setColorButtom(button: button, color: .black)
+        view.setColorButtom(button: button, color: .random)
     }
-    
-    
 }
 
+extension UIColor {
+    static var random: UIColor {
+        return .init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
+    }
+}
 
 /*
  - Реализовать приложение с кастомными UI элементами. По макету: [**https://www.figma.com/file/pSDARV8tp3yAvcTkH07r50/Untitled?node-id=0%3A1**](https://www.figma.com/file/pSDARV8tp3yAvcTkH07r50/Untitled?node-id=0%3A1)
