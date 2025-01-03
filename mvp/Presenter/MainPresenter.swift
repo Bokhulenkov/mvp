@@ -17,11 +17,6 @@ protocol MainViewPresenterProtocol: AnyObject {
     func showNewButtonColor(button: UIButton)
 }
 
-
-
-
-
-
 class MainPresenter: MainViewPresenterProtocol {
     let view: MainViewProtocol
     

@@ -12,6 +12,8 @@ final class ViewController: UIViewController {
 //    MARK: - Properties
     var presenter: MainViewPresenterProtocol!
     
+    let navItem = UINavigationItem(title: "title")
+    
     private lazy var progressBar: UIProgressView = {
         let element = UIProgressView()
         element.progress = 0.5
@@ -37,6 +39,11 @@ final class ViewController: UIViewController {
 //    MARK: - LifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "Nav bar"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "1/10")
+        
         setupUI()
         setupConstraints()
         setActionForButton()
