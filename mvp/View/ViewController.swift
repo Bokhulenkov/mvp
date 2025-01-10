@@ -14,12 +14,13 @@ final class ViewController: UIViewController {
     
     let navItem = UINavigationItem(title: "title")
     
-    private lazy var progressBar: UIProgressView = {
-        let element = UIProgressView()
-        element.progress = 0.5
-        element.progressTintColor = .blue
-        element.translatesAutoresizingMaskIntoConstraints = false
-        return element
+    private let progressBar: ProgressBarView = {
+        let progressBar = ProgressBarView()
+        progressBar.backgroundColorLayer = .systemGray
+        progressBar.progressColor = .systemBlue
+        progressBar.progress = 0.5
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        return progressBar
     }()
     
     private lazy var vStack: UIStackView = {
@@ -30,17 +31,17 @@ final class ViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
-    
+//    создали кнопки
     private lazy var alertButton = CustomButton(type: .showAlert)
     private lazy var upButton = CustomButton(type: .upProgress)
     private lazy var downButton = CustomButton(type: .downPorgess)
     private lazy var backgrondButton = CustomButton(type: .changeBackground)
-
+    
 //    MARK: - LifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Nav bar"
+        self.navigationItem.titleView = progressBar
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "1/10")
         
@@ -75,9 +76,7 @@ final class ViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            progressBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            progressBar.heightAnchor.constraint(equalToConstant: 20),
             
             vStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             vStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
