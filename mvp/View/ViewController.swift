@@ -8,17 +8,14 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    
 //    MARK: - Properties
     var presenter: MainViewPresenterProtocol!
-    
     let navItem = UINavigationItem(title: "title")
     
-    private let progressBar: ProgressBarView = {
+    private lazy var progressBar: ProgressBarView = {
         let progressBar = ProgressBarView()
         progressBar.backgroundColorLayer = .systemGray
         progressBar.progressColor = .systemBlue
-        progressBar.progress = 0.5
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         return progressBar
     }()
@@ -51,14 +48,20 @@ final class ViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func tapedButton(_ sender: CustomButton) {
-        presenter.showNewButtonColor(button: sender)
+    @objc private func changeColor(_ sender: CustomButton) {
+        presenter.tappedChangeBackgroundButton()
     }
     
+    @objc private func upProgress() {
+        presenter.tappedChangeProgressButton()
+    }
+    
+    @objc private func tappedProgerss() {
+        
+    }
     // MARK: - Methods
     private func setupUI() {
         view.backgroundColor = .white
-        view.addSubview(progressBar)
         view.addSubview(vStack)
         
         vStack.addArrangedSubview(alertButton)
@@ -68,12 +71,26 @@ final class ViewController: UIViewController {
     }
     
     private func setActionForButton() {
-        alertButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
-        upButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
-        downButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
-        backgrondButton.addTarget(self, action: #selector(tapedButton), for: .touchUpInside)
+        backgrondButton.addTarget(self, action: #selector(changeColor), for: .touchUpInside)
+        upButton.addTarget(self, action: #selector(upProgress), for: .touchUpInside)
     }
     
+    
+}
+
+// MARK: - Extensions
+extension ViewController: MainViewProtocol {
+    func setProgress(value: CGFloat) {
+        progressBar.progress = value
+    }
+    
+    func setRandomBackground(color: UIColor) {
+        view.backgroundColor = color
+    }
+}
+
+// MARK: - Settings Constraints
+extension ViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             progressBar.heightAnchor.constraint(equalToConstant: 20),
@@ -95,12 +112,4 @@ final class ViewController: UIViewController {
             backgrondButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
-}
-
-extension ViewController: MainViewProtocol {
-    func setColorButtom(button: UIButton, color: UIColor) {
-        button.backgroundColor = color
-    }
-    
-    
 }

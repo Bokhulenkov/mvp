@@ -18,13 +18,13 @@ final class ProgressBarView: UIView {
         }
     }
     
-    var progressColor: UIColor = .systemBlue {
+    public var progressColor: UIColor = .systemBlue {
         didSet {
             progressLayer.backgroundColor = progressColor.cgColor
         }
     }
     
-    var backgroundColorLayer: UIColor = .systemGray {
+    public var backgroundColorLayer: UIColor = .systemGray {
         didSet {
             backgroundLayer.backgroundColor = backgroundColorLayer.cgColor
         }
@@ -47,14 +47,7 @@ final class ProgressBarView: UIView {
     }
     
     private func setupLayers() {
-        backgroundLayer.borderColor = backgroundColorLayer.cgColor
-        backgroundLayer.frame = self.bounds
-        backgroundLayer.cornerRadius = self.bounds.height / 2
         layer.addSublayer(backgroundLayer)
-        
-        progressLayer.borderColor = progressColor.cgColor
-        progressLayer.frame = CGRect(x: 0, y: 0, width: 0, height: bounds.height)
-        progressLayer.cornerRadius = bounds.height / 2
         layer.addSublayer(progressLayer)
     }
     

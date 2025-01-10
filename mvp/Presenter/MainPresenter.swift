@@ -9,25 +9,38 @@ import UIKit
 
 protocol MainViewProtocol: AnyObject {
 //   обработка данных в presenter и отдаем View
-    func setColorButtom(button: UIButton, color: UIColor)
+    func setRandomBackground(color: UIColor)
+    func setProgress(value: CGFloat)
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
-    init(view: MainViewProtocol)
-    func showNewButtonColor(button: UIButton)
+    init(view: MainViewProtocol, data: ModelData)
+    var data: ModelData { get set }
+    func tappedChangeBackgroundButton()
+    func tappedChangeProgressButton()
 }
 
 // MARK: - Presenter
 class MainPresenter: MainViewPresenterProtocol {
     let view: MainViewProtocol
+    var data: ModelData
+    var progress: CGFloat
     
-    required init(view: any MainViewProtocol) {
+    required init(view: MainViewProtocol, data: ModelData) {
         self.view = view
+        self.data = data
+        self.progress = data.progress
     }
     
-    func showNewButtonColor(button: UIButton) {
-        view.setColorButtom(button: button, color: .random)
+    func tappedChangeBackgroundButton() {
+        view.setRandomBackground(color: .random)
     }
+    
+    func tappedChangeProgressButton() {
+        data.progress = progress
+        progress = min((progress + 0.1), 1.0)
+        view.setProgress(value: progress)
+    } 
 }
 
 extension UIColor {

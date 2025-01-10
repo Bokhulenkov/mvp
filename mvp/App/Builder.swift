@@ -14,8 +14,12 @@ protocol Builder: AnyObject {
 class MainBuilders: Builder {
     static func createMain() -> UIViewController {
         let view = ViewController()
-        let presenter = MainPresenter(view: view)
+#warning("в момент загрузки view не применяются изменения для progress - ModelData(progress: 0.5)")
+        let data = ModelData(progress: 0.0)
+        let presenter = MainPresenter(view: view, data: data)
         view.presenter = presenter
         return view
     }
 }
+
+
