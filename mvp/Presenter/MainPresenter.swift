@@ -17,7 +17,7 @@ protocol MainViewPresenterProtocol: AnyObject {
     init(view: MainViewProtocol, data: ModelData)
     var data: ModelData { get set }
     func tappedChangeBackgroundButton()
-    func tappedChangeProgressButton()
+    func tappedChangeProgressButton(id: String?)
 }
 
 // MARK: - Presenter
@@ -36,11 +36,15 @@ class MainPresenter: MainViewPresenterProtocol {
         view.setRandomBackground(color: .random)
     }
     
-    func tappedChangeProgressButton() {
+    func tappedChangeProgressButton(id: String?) {
         data.progress = progress
-        progress = min((progress + 0.1), 1.0)
+        if id == data.addProgress {
+            progress = min((progress + 0.1), 1.0)
+        } else if id == data.reduceProgress {
+            progress = min((progress - 0.1), 0.0)
+        }
         view.setProgress(value: progress)
-    } 
+    }
 }
 
 extension UIColor {

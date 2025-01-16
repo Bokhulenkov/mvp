@@ -43,7 +43,10 @@ final class ProgressBarView: UIView {
     // MARK: - Methods
     private func updateProgress() {
         let width = bounds.width * progress
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.5)
         progressLayer.frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
+        CATransaction.commit()
     }
     
     private func setupLayers() {

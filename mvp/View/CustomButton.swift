@@ -27,11 +27,13 @@ final class CustomButton: UIButton {
             self.backgroundColor = .brown
         case .upProgress:
             self.setTitle("Увеличить прогресс", for: .normal)
+            self.accessibilityIdentifier = "upProgress"
             self.layer.cornerRadius = 20
             self.backgroundColor = .red
         case .downPorgess:
             self.setTitle("Уменьшить прогресс", for: .normal)
             self.layer.cornerRadius = 20
+            self.accessibilityIdentifier = "downProgress"
             self.backgroundColor = .green
         case .changeBackground:
             self.setTitle("Изменить Background", for: .normal)

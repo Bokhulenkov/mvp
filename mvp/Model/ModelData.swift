@@ -9,4 +9,6 @@ import Foundation
 
 struct ModelData {
     var progress: CGFloat
+    let addProgress: String?
+    let reduceProgress: String?
 }

@@ -40,7 +40,7 @@ final class ViewController: UIViewController {
         
         self.navigationItem.titleView = progressBar
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: nil, action: nil)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "1/10")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(K.progressValue)/10")
         
         setupUI()
         setupConstraints()
@@ -52,8 +52,12 @@ final class ViewController: UIViewController {
         presenter.tappedChangeBackgroundButton()
     }
     
-    @objc private func upProgress() {
-        presenter.tappedChangeProgressButton()
+    @objc private func upProgress(_ sender: UIButton) {
+        presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
+    }
+    
+    @objc private func downProgress(_ sender: UIButton) {
+        presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
     }
     
     @objc private func tappedProgerss() {
@@ -73,15 +77,17 @@ final class ViewController: UIViewController {
     private func setActionForButton() {
         backgrondButton.addTarget(self, action: #selector(changeColor), for: .touchUpInside)
         upButton.addTarget(self, action: #selector(upProgress), for: .touchUpInside)
+        downButton.addTarget(self, action: #selector(downProgress), for: .touchUpInside)
     }
-    
-    
 }
 
 // MARK: - Extensions
 extension ViewController: MainViewProtocol {
     func setProgress(value: CGFloat) {
         progressBar.progress = value
+//        K.progressValue += 1
+//        let progress = min(K.progressValue, 10)
+//        self.navigationItem.rightBarButtonItem?.title = "\(progress)/10"
     }
     
     func setRandomBackground(color: UIColor) {
