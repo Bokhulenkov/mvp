@@ -10,7 +10,6 @@ import UIKit
 final class ViewController: UIViewController {
 //    MARK: - Properties
     var presenter: MainViewPresenterProtocol!
-    let navItem = UINavigationItem(title: "title")
     
     private lazy var progressBar: ProgressBarView = {
         let progressBar = ProgressBarView()
@@ -31,7 +30,7 @@ final class ViewController: UIViewController {
 //    создали кнопки
     private lazy var alertButton = CustomButton(type: .showAlert)
     private lazy var upButton = CustomButton(type: .upProgress)
-    private lazy var downButton = CustomButton(type: .downPorgess)
+    private lazy var downButton = CustomButton(type: .downProgress)
     private lazy var backgrondButton = CustomButton(type: .changeBackground)
     
 //    MARK: - LifeCicle
@@ -83,11 +82,9 @@ final class ViewController: UIViewController {
 
 // MARK: - Extensions
 extension ViewController: MainViewProtocol {
-    func setProgress(value: CGFloat) {
-        progressBar.progress = value
-//        K.progressValue += 1
-//        let progress = min(K.progressValue, 10)
-//        self.navigationItem.rightBarButtonItem?.title = "\(progress)/10"
+    func setProgress(progress: CGFloat, value: Int) {
+        progressBar.progress = progress
+        self.navigationItem.rightBarButtonItem?.title = "\(value)/10"
     }
     
     func setRandomBackground(color: UIColor) {

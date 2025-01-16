@@ -10,6 +10,6 @@ import Foundation
 enum MyButtonType {
     case showAlert
     case upProgress
-    case downPorgess
+    case downProgress
     case changeBackground
 }

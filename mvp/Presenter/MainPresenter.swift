@@ -10,7 +10,7 @@ import UIKit
 protocol MainViewProtocol: AnyObject {
 //   обработка данных в presenter и отдаем View
     func setRandomBackground(color: UIColor)
-    func setProgress(value: CGFloat)
+    func setProgress(progress: CGFloat, value: Int)
 }
 
 protocol MainViewPresenterProtocol: AnyObject {
@@ -25,6 +25,7 @@ class MainPresenter: MainViewPresenterProtocol {
     let view: MainViewProtocol
     var data: ModelData
     var progress: CGFloat
+    var valueProgress = 0
     
     required init(view: MainViewProtocol, data: ModelData) {
         self.view = view
@@ -38,12 +39,15 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func tappedChangeProgressButton(id: String?) {
         data.progress = progress
-        if id == data.addProgress {
+        if id == data.addProgress && valueProgress < 10 {
             progress = min((progress + 0.1), 1.0)
-        } else if id == data.reduceProgress {
-            progress = min((progress - 0.1), 0.0)
+            valueProgress += 1
+            
+        } else if id == data.reduceProgress && valueProgress > 0 {
+            progress = max((progress - 0.1), 0.0)
+            valueProgress -= 1
         }
-        view.setProgress(value: progress)
+        view.setProgress(progress: progress, value: valueProgress)
     }
 }
 
