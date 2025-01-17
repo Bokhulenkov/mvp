@@ -33,6 +33,41 @@ final class ViewController: UIViewController {
     private lazy var downButton = CustomButton(type: .downProgress)
     private lazy var backgrondButton = CustomButton(type: .changeBackground)
     
+    
+//    CAEmitterLayer
+    private func createParticles() {
+        let particlesEmitter = CAEmitterLayer()
+        
+        particlesEmitter.emitterPosition = CGPoint(x: view.center.x, y: -96)
+        particlesEmitter.emitterShape = .line
+        particlesEmitter.emitterSize = CGSize(width: view.frame.width, height: 1)
+        
+        let red = makeEmitterCell(color: .red)
+        let green = makeEmitterCell(color: .green)
+        let blue = makeEmitterCell(color: .blue)
+        
+        particlesEmitter.emitterCells = [red, green, blue]
+        
+        view.layer.addSublayer(particlesEmitter)
+    }
+    
+    private func makeEmitterCell(color: UIColor) -> CAEmitterCell {
+        let cell = CAEmitterCell()
+        cell.birthRate = 2
+        cell.lifetime = 5.0
+        cell.color = color.cgColor
+        cell.velocity = 150
+        cell.velocityRange = 300
+        cell.emissionLongitude = CGFloat.pi
+        cell.emissionRange = CGFloat.pi / 4
+        cell.spin = 2
+        cell.spinRange = 3
+        cell.scaleRange = 0.7
+        cell.scaleSpeed = -0.07
+        
+        cell.contents = UIImage(systemName: "leaf")?.cgImage
+        return cell
+    }
 //    MARK: - LifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +94,8 @@ final class ViewController: UIViewController {
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
     }
     
-    @objc private func tappedProgerss() {
-        
+    @objc private func tappedAllert() {
+        createParticles()
     }
     // MARK: - Methods
     private func setupUI() {
@@ -77,6 +112,7 @@ final class ViewController: UIViewController {
         backgrondButton.addTarget(self, action: #selector(changeColor), for: .touchUpInside)
         upButton.addTarget(self, action: #selector(upProgress), for: .touchUpInside)
         downButton.addTarget(self, action: #selector(downProgress), for: .touchUpInside)
+        alertButton.addTarget(self, action: #selector(tappedAllert), for: .touchUpInside)
     }
 }
 
