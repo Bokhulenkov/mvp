@@ -36,37 +36,29 @@ final class ViewController: UIViewController {
     
 //    CAEmitterLayer
     private func createParticles() {
-        let particlesEmitter = CAEmitterLayer()
+        let emitterLayer = CAEmitterLayer()
         
-        particlesEmitter.emitterPosition = CGPoint(x: view.center.x, y: -96)
-        particlesEmitter.emitterShape = .line
-        particlesEmitter.emitterSize = CGSize(width: view.frame.width, height: 1)
+        emitterLayer.emitterPosition = CGPoint(x: view.center.x, y: -90)
+        emitterLayer.emitterShape = .line
+        emitterLayer.emitterSize = CGSize(width: view.frame.width, height: 1)
         
-        let red = makeEmitterCell(color: .red)
-        let green = makeEmitterCell(color: .green)
-        let blue = makeEmitterCell(color: .blue)
-        
-        particlesEmitter.emitterCells = [red, green, blue]
-        
-        view.layer.addSublayer(particlesEmitter)
-    }
-    
-    private func makeEmitterCell(color: UIColor) -> CAEmitterCell {
+        view.layer.addSublayer(emitterLayer)
+
         let cell = CAEmitterCell()
-        cell.birthRate = 2
-        cell.lifetime = 5.0
-        cell.color = color.cgColor
-        cell.velocity = 150
-        cell.velocityRange = 300
+        cell.birthRate = 1
+        cell.lifetime = 50
+        cell.velocity = 100
+        cell.velocityRange = 2
+        
         cell.emissionLongitude = CGFloat.pi
         cell.emissionRange = CGFloat.pi / 4
-        cell.spin = 2
-        cell.spinRange = 3
+        cell.spin = 0.5
         cell.scaleRange = 0.7
         cell.scaleSpeed = -0.07
         
-        cell.contents = UIImage(systemName: "leaf")?.cgImage
-        return cell
+        cell.contents = UIImage(named: K.confetti)?.cgImage
+        
+        emitterLayer.emitterCells = [cell]
     }
 //    MARK: - LifeCicle
     override func viewDidLoad() {
