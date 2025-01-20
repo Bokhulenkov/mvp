@@ -12,4 +12,6 @@ struct K {
     static let upProgress = "upProgress"
     static let downProgress = "downProgress"
     static let confetti = "confetti"
+    static let alertTitle = "Введите ваше имя"
+    static let alertButtonLabel = "Готово"
 }

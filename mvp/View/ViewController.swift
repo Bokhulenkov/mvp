@@ -60,7 +60,8 @@ final class ViewController: UIViewController {
     }
     
     @objc private func tappedAllert() {
-        presenter.tappedShowConfetti(view: self.view)
+//        presenter.tappedShowConfetti(view: self.view)
+        presenter.tappedAlertButton(vc: self)
     }
     // MARK: - Methods
     private func setupUI() {
