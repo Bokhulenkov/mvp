@@ -33,33 +33,6 @@ final class ViewController: UIViewController {
     private lazy var downButton = CustomButton(type: .downProgress)
     private lazy var backgrondButton = CustomButton(type: .changeBackground)
     
-    
-//    CAEmitterLayer
-    private func createParticles() {
-        let emitterLayer = CAEmitterLayer()
-        
-        emitterLayer.emitterPosition = CGPoint(x: view.center.x, y: -90)
-        emitterLayer.emitterShape = .line
-        emitterLayer.emitterSize = CGSize(width: view.frame.width, height: 1)
-        
-        view.layer.addSublayer(emitterLayer)
-
-        let cell = CAEmitterCell()
-        cell.birthRate = 1
-        cell.lifetime = 50
-        cell.velocity = 100
-        cell.velocityRange = 2
-        
-        cell.emissionLongitude = CGFloat.pi
-        cell.emissionRange = CGFloat.pi / 4
-        cell.spin = 0.5
-        cell.scaleRange = 0.7
-        cell.scaleSpeed = -0.07
-        
-        cell.contents = UIImage(named: K.confetti)?.cgImage
-        
-        emitterLayer.emitterCells = [cell]
-    }
 //    MARK: - LifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +60,7 @@ final class ViewController: UIViewController {
     }
     
     @objc private func tappedAllert() {
-        createParticles()
+        presenter.tappedShowConfetti(view: self.view)
     }
     // MARK: - Methods
     private func setupUI() {

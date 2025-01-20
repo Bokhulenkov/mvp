@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MainViewProtocol: AnyObject {
-//   обработка данных в presenter и отдаем View
+    //   обработка данных в presenter и отдаем View
     func setRandomBackground(color: UIColor)
     func setProgress(progress: CGFloat, value: Int)
 }
@@ -18,6 +18,8 @@ protocol MainViewPresenterProtocol: AnyObject {
     var data: ModelData { get set }
     func tappedChangeBackgroundButton()
     func tappedChangeProgressButton(id: String?)
+#warning("здесь view это UIView или оно тоже должно быть абстрактным view")
+    func tappedShowConfetti(view: UIView)
 }
 
 // MARK: - Presenter
@@ -49,6 +51,34 @@ class MainPresenter: MainViewPresenterProtocol {
         }
         view.setProgress(progress: progress, value: valueProgress)
     }
+    
+    func tappedShowConfetti(view: UIView) {
+#warning("На сколько хорошая практика передавать конкретно view или тут тоже надо передавать протокол")
+        
+        let emitterLayer = CAEmitterLayer()
+        
+        emitterLayer.emitterPosition = CGPoint(x: view.center.x, y: -90)
+        emitterLayer.emitterShape = .line
+        emitterLayer.emitterSize = CGSize(width: view.frame.width, height: 1)
+        
+        view.layer.addSublayer(emitterLayer)
+
+        let cell = CAEmitterCell()
+        cell.birthRate = 1
+        cell.lifetime = 50
+        cell.velocity = 100
+        cell.velocityRange = 2
+        
+        cell.emissionLongitude = CGFloat.pi
+        cell.emissionRange = CGFloat.pi / 4
+        cell.spin = 0.5
+        cell.scaleRange = 0.7
+        cell.scaleSpeed = -0.07
+        
+        cell.contents = UIImage(named: K.confetti)?.cgImage
+        
+        emitterLayer.emitterCells = [cell]
+    }
 }
 
 extension UIColor {
@@ -65,3 +95,6 @@ extension UIColor {
  - Для создания конфетти использовать **CAEmitterLayer**.
  - По нажатию на кнопку должна срабатывать анимация**:**
  */
+
+
+// user тапнул, дергаем презентер - и запускаем анимацию
