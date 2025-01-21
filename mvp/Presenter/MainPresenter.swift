@@ -49,7 +49,7 @@ class MainPresenter: MainViewPresenterProtocol {
             print(userName ?? "nil")
         }
         
-        alertController.addTextField { textField in
+        alertController.addTextField { textField in   
             textField.placeholder = "Имя"
             textField.autocapitalizationType = .words
             textField.returnKeyType = .go
