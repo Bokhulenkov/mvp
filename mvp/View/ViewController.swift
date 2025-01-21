@@ -53,6 +53,7 @@ final class ViewController: UIViewController {
     
     @objc private func upProgress(_ sender: UIButton) {
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
+        
     }
     
     @objc private func downProgress(_ sender: UIButton) {
