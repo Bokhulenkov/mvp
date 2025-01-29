@@ -76,7 +76,6 @@ class MainPresenter: MainViewPresenterProtocol {
         view.setProgress(progress: progress, value: valueProgress)
     }
     
-#warning("На сколько хорошая практика передавать конкретно view или тут тоже надо передавать протокол")
     func tappedShowConfetti(view: UIView) {
         let emitterLayer = CAEmitterLayer()
         

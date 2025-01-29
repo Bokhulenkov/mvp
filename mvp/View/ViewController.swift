@@ -151,13 +151,13 @@ extension UIView {
     }
     
     func tapedAnimation(_ sender: UIButton, from button: UIButton ) {
-        UIView.animate(withDuration: 2, delay: 0, options: [.autoreverse]) {
-//            sender.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 90).isActive = true
-            self.layoutIfNeeded()
+
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.autoreverse]) {
+            sender.transform = CGAffineTransform(translationX: 0, y: 10)
         }
-//        completion: { <#Bool#> in
-//            <#code#>
-//        }
+        completion: {_ in 
+            sender.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
 
 
 
