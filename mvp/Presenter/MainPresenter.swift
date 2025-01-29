@@ -20,7 +20,6 @@ protocol MainViewPresenterProtocol: AnyObject {
     func tappedAlertButton(vc: UIViewController)
     func tappedChangeBackgroundButton()
     func tappedChangeProgressButton(id: String?)
-#warning("здесь view это UIView или оно тоже должно быть абстрактным view")
     func tappedShowConfetti(view: UIView)
 }
 

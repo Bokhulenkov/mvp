@@ -10,6 +10,7 @@ import UIKit
 final class ViewController: UIViewController {
 //    MARK: - Properties
     var presenter: MainViewPresenterProtocol!
+    private var tapButton = true
     
     private lazy var progressBar: ProgressBarView = {
         let progressBar = ProgressBarView()
@@ -49,6 +50,8 @@ final class ViewController: UIViewController {
     // MARK: - Actions
     @objc private func changeColor(_ sender: CustomButton) {
         presenter.tappedChangeBackgroundButton()
+        sender.tapedAnimation(sender)
+        
     }
     
     @objc private func upProgress(_ sender: UIButton) {
@@ -58,6 +61,11 @@ final class ViewController: UIViewController {
     
     @objc private func downProgress(_ sender: UIButton) {
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
+        sender.showAnimation {
+            self.tapButton.toggle()
+            sender.layer.shadowOffset = self.tapButton ? CGSize(width: 1, height: 1) : CGSize(width: 3, height: 4)
+            sender.layer.opacity = self.tapButton ? 0.7 : 1
+        }
     }
     
     @objc private func tappedAllert() {
@@ -117,5 +125,41 @@ extension ViewController {
             backgrondButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             backgrondButton.heightAnchor.constraint(equalToConstant: 80)
         ])
+    }
+}
+
+public extension UIView {
+    func showAnimation(_ completionBlock: @escaping () -> Void) {
+      isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.1,
+                       delay: 0,
+                       options: .curveLinear,
+                       animations: { [weak self] in
+                            self?.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
+        }) {  (done) in
+            UIView.animate(withDuration: 0.1,
+                           delay: 0,
+                           options: .curveLinear,
+                           animations: { [weak self] in
+                                self?.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            }) { [weak self] (_) in
+                self?.isUserInteractionEnabled = true
+                completionBlock()
+            }
+        }
+    }
+    
+    func tapedAnimation(_ sender: UIButton) {
+        UIView.animate(withDuration: 3, delay: 0, options: [.autoreverse]) {
+            sender.translatesAutoresizingMaskIntoConstraints = false
+            sender.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            sender.layoutIfNeeded()
+        }
+//        completion: { <#Bool#> in
+//            <#code#>
+//        }
+
+
+
     }
 }
