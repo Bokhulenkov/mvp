@@ -48,7 +48,7 @@ class MainPresenter: MainViewPresenterProtocol {
             print(userName ?? "nil")
         }
         
-        alertController.addTextField { textField in   
+        alertController.addTextField { textField in
             textField.placeholder = "Имя"
             textField.autocapitalizationType = .words
             textField.returnKeyType = .go
@@ -72,10 +72,13 @@ class MainPresenter: MainViewPresenterProtocol {
         } else if id == data.reduceProgress && valueProgress > 0 {
             progress = max((progress - 0.1), 0.0)
             valueProgress -= 1
+        } else {
+            progress = 0
+            valueProgress = 0
         }
         view.setProgress(progress: progress, value: valueProgress)
     }
-    
+#warning("конфети же это ui надо ли использовать тогда dispatchQueu.main.async ")
     func tappedShowConfetti(view: UIView) {
         let emitterLayer = CAEmitterLayer()
         
@@ -84,7 +87,7 @@ class MainPresenter: MainViewPresenterProtocol {
         emitterLayer.emitterSize = CGSize(width: view.frame.width, height: 1)
         
         view.layer.addSublayer(emitterLayer)
-
+        
         let cell = CAEmitterCell()
         cell.birthRate = 1
         cell.lifetime = 50

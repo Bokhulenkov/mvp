@@ -31,8 +31,10 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.titleView = progressBar
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: nil, action: nil)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetProgress))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(K.progressValue)/10")
+        navigationItem.leftBarButtonItem?.tintColor = .gray
+        navigationItem.rightBarButtonItem?.tintColor = .gray
         
         setupUI()
         setActionForButton()
@@ -69,6 +71,11 @@ final class ViewController: UIViewController {
         sender.tapedAnimation(sender)
         presenter.tappedAlertButton(vc: self)
     }
+    
+    @objc private func resetProgress(_ sender: UIButton) {
+        presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
+    }
+    
     // MARK: - Methods
     private func setupUI() {
         view.backgroundColor = .white
