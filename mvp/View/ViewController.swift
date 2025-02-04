@@ -8,8 +8,9 @@
 import UIKit
 
 final class ViewController: UIViewController {
-//    MARK: - Properties
-    var presenter: MainViewPresenterProtocol!
+    //    MARK: - Properties
+    public var presenter: MainViewPresenterProtocol!
+    
     private var tapButton = true
     
     private lazy var progressBar: ProgressBarView = {
@@ -20,13 +21,12 @@ final class ViewController: UIViewController {
         return progressBar
     }()
     
-//    создали кнопки
     private lazy var alertButton = CustomButton(type: .showAlert)
     private lazy var upButton = CustomButton(type: .upProgress)
     private lazy var downButton = CustomButton(type: .downProgress)
     private lazy var backgrondButton = CustomButton(type: .changeBackground)
     
-//    MARK: - LifeCicle
+    //    MARK: - LifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,27 +35,27 @@ final class ViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(K.progressValue)/10")
         
         setupUI()
+        setActionForButton()
         
         alertButton.translatesAutoresizingMaskIntoConstraints = false
         upButton.translatesAutoresizingMaskIntoConstraints = false
         downButton.translatesAutoresizingMaskIntoConstraints = false
         backgrondButton.translatesAutoresizingMaskIntoConstraints = false
-        
         setupConstraints()
-        setActionForButton()
     }
     
     // MARK: - Actions
     @objc private func changeColor(_ sender: CustomButton) {
+        sender.tapedAnimation(sender)
         presenter.tappedChangeBackgroundButton()
-        sender.tapedAnimation(sender, from: downButton)
+        presenter.tappedShowConfetti(view: self.view)
     }
     
     @objc private func upProgress(_ sender: UIButton) {
+        sender.tapedAnimation(sender)
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
-        
     }
-    
+#warning("сразу не отрабатывает, только после нескольних нажатий свет затемняется")
     @objc private func downProgress(_ sender: UIButton) {
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
         sender.showAnimation {
@@ -65,8 +65,8 @@ final class ViewController: UIViewController {
         }
     }
     
-    @objc private func tappedAllert() {
-//        presenter.tappedShowConfetti(view: self.view)
+    @objc private func tappedAllert(_ sender: UIButton) {
+        sender.tapedAnimation(sender)
         presenter.tappedAlertButton(vc: self)
     }
     // MARK: - Methods
@@ -87,7 +87,7 @@ final class ViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
+// MARK: - Extensions MainViewProtocol
 extension ViewController: MainViewProtocol {
     func setProgress(progress: CGFloat, value: Int) {
         progressBar.progress = progress
@@ -99,10 +99,9 @@ extension ViewController: MainViewProtocol {
     }
 }
 
-// MARK: - Settings Constraints
+// MARK: - Extensions Constraints
 extension ViewController {
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             progressBar.heightAnchor.constraint(equalToConstant: 20),
             
@@ -129,37 +128,3 @@ extension ViewController {
     }
 }
 
-extension UIView {
-    func showAnimation(_ completionBlock: @escaping () -> Void) {
-      isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.1,
-                       delay: 0,
-                       options: .curveLinear,
-                       animations: { [weak self] in
-                            self?.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
-        }) {  (done) in
-            UIView.animate(withDuration: 0.1,
-                           delay: 0,
-                           options: .curveLinear,
-                           animations: { [weak self] in
-                                self?.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-            }) { [weak self] (_) in
-                self?.isUserInteractionEnabled = true
-                completionBlock()
-            }
-        }
-    }
-    
-    func tapedAnimation(_ sender: UIButton, from button: UIButton ) {
-
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.autoreverse]) {
-            sender.transform = CGAffineTransform(translationX: 0, y: 10)
-        }
-        completion: {_ in 
-            sender.transform = CGAffineTransform(translationX: 0, y: 0)
-        }
-
-
-
-    }
-}
