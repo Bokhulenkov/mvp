@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class CustomAlert: UIView {
-//    MARK: - Properties
+final class CustomAlertView: UIView {
+    //    MARK: - Properties
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .center
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -22,6 +22,8 @@ final class CustomAlert: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.textAlignment = .left
+        textField.textColor = .systemBlue
+        textField.backgroundColor = .lightGray
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -35,7 +37,7 @@ final class CustomAlert: UIView {
         return button
     }()
     
-//    MARK: - init
+    //    MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -46,7 +48,7 @@ final class CustomAlert: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Methods
+    // MARK: - Methods
     private func setUI() {
         [
             titleLabel,
@@ -55,27 +57,33 @@ final class CustomAlert: UIView {
         ].forEach {
             addSubview($0)
         }
-        titleLabel.text = "Введите ваше имя"
-        textField.placeholder = "введите ваше имя..."
-        goButton.setTitle("Готово", for: .normal)
+        titleLabel.text = K.alertTitle
+        textField.placeholder = "\(K.alertTitle)..."
+        goButton.setTitle(K.alertButtonLabel, for: .normal)
+        goButton.addTarget(self, action: #selector(tapedGoButton), for: .touchUpInside)
+    }
+    
+    @objc private func tapedGoButton() {
+        print("tap")
     }
 }
 
 // MARK: - Extensions Constraints
-extension CustomAlert {
+extension CustomAlertView {
     func setConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 40),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            textField.centerYAnchor.constraint(equalTo: centerYAnchor),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
+            textField.heightAnchor.constraint(equalToConstant: 50),
             
-            goButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 10),
-            goButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            goButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            goButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            goButton.widthAnchor.constraint(equalToConstant: 150),
+            goButton.heightAnchor.constraint(equalToConstant: 40),
+            goButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            goButton.bottomAnchor.constraint(greaterThanOrEqualTo: centerYAnchor, constant: 100)
         ])
     }
 }

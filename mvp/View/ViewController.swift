@@ -11,7 +11,7 @@ final class ViewController: UIViewController {
     //    MARK: - Properties
     public var presenter: MainViewPresenterProtocol!
     
-    private var tapButton = true
+    private var tapButton = false
     
     private lazy var progressBar: ProgressBarView = {
         let progressBar = ProgressBarView()
@@ -57,7 +57,7 @@ final class ViewController: UIViewController {
         sender.tapedAnimation(sender)
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
     }
-#warning("сразу не отрабатывает, только после нескольних нажатий свет затемняется")
+
     @objc private func downProgress(_ sender: UIButton) {
         presenter.tappedChangeProgressButton(id: sender.accessibilityIdentifier)
         sender.showAnimation {
@@ -69,7 +69,11 @@ final class ViewController: UIViewController {
     
     @objc private func tappedAllert(_ sender: UIButton) {
         sender.tapedAnimation(sender)
-        presenter.tappedAlertButton(vc: self)
+//        presenter.tappedAlertButton(vc: self)
+        let vc = CustomAlertVC()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        present(vc, animated: true)
     }
     
     @objc private func resetProgress(_ sender: UIButton) {
@@ -103,6 +107,13 @@ extension ViewController: MainViewProtocol {
     
     func setRandomBackground(color: UIColor) {
         view.backgroundColor = color
+    }
+}
+
+// MARK: - Extensions UIViewControllerTransitioningDelegate
+extension ViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return CustomPresentationController(presentedViewController: forPresented, presenting: presenting)
     }
 }
 

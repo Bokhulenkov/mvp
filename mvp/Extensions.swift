@@ -18,7 +18,7 @@ extension UIColor {
         )
     }
 }
-#warning("или надо по хорошему их в presenter отправить")
+
 // MARK: - UIView
 extension UIView {
     func showAnimation(_ completionBlock: @escaping () -> Void) {

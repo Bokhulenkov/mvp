@@ -78,7 +78,7 @@ class MainPresenter: MainViewPresenterProtocol {
         }
         view.setProgress(progress: progress, value: valueProgress)
     }
-#warning("конфети же это ui надо ли использовать тогда dispatchQueu.main.async ")
+
     func tappedShowConfetti(view: UIView) {
         let emitterLayer = CAEmitterLayer()
         

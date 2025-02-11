@@ -9,8 +9,6 @@ import UIKit
 
 final class ProgressBarView: UIView {
     // MARK: - Properties
-    private let progressLayer = CALayer()
-    private let backgroundLayer = CALayer()
     
     public var progress: CGFloat = 0.0 {
         didSet {
@@ -29,6 +27,9 @@ final class ProgressBarView: UIView {
             backgroundLayer.backgroundColor = backgroundColorLayer.cgColor
         }
     }
+    
+    private let progressLayer = CALayer()
+    private let backgroundLayer = CALayer()
     
     // MARK: - Init
     override init(frame: CGRect) {
