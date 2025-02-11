@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol CustomAlertProtocol: AnyObject {
+    func didCloseAlert()
+}
+
 final class CustomAlertView: UIView {
     //    MARK: - Properties
-    let titleLabel: UILabel = {
+    weak var delegate: CustomAlertProtocol!
+    
+    //    MARK: - Private Properties
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .center
@@ -18,7 +25,7 @@ final class CustomAlertView: UIView {
         return label
     }()
     
-    let textField: UITextField = {
+    private let textField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.textAlignment = .left
@@ -28,7 +35,7 @@ final class CustomAlertView: UIView {
         return textField
     }()
     
-    let goButton: UIButton = {
+    private let goButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .blue
         button.setTitleColor(.white, for: .normal)
@@ -63,7 +70,8 @@ final class CustomAlertView: UIView {
         goButton.addTarget(self, action: #selector(tapedGoButton), for: .touchUpInside)
     }
     
-    @objc private func tapedGoButton() {
+    @objc func tapedGoButton(vc: UIViewController) {
+        delegate.didCloseAlert()
         print("tap")
     }
 }

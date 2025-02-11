@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 final class CustomAlertVC: UIViewController {
     //    MARK: - Properties
     private let alertView = CustomAlertView()
@@ -20,5 +22,13 @@ final class CustomAlertVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
+        alertView.delegate = self
+    }
+}
+
+// MARK: - Extensions CustomAlertProtocol
+extension CustomAlertVC: CustomAlertProtocol {
+    func didCloseAlert() {
+        dismiss(animated: true)
     }
 }

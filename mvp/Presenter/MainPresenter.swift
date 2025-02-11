@@ -101,18 +101,9 @@ class MainPresenter: MainViewPresenterProtocol {
         
         cell.contents = UIImage(named: K.confetti)?.cgImage
         emitterLayer.emitterCells = [cell]
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            emitterLayer.removeFromSuperlayer()
+        }
     }
 }
-
-
-/*
- - Реализовать приложение с кастомными UI элементами. По макету: [**https://www.figma.com/file/pSDARV8tp3yAvcTkH07r50/Untitled?node-id=0%3A1**](https://www.figma.com/file/pSDARV8tp3yAvcTkH07r50/Untitled?node-id=0%3A1)
- - Для реализации кнопок наследуемся от **UIButton**. В инициализаторе наследника передаем параметр типа **enum** **ButtonType**, в соответствии с которым конфигурируем цвета.
- - Работу заполняющегося бара реализовать через **CALayer**.
- - По нажатию на кнопку смены цвета менять **backgroundColor** контроллера на рандомный цвет.
- - Для создания конфетти использовать **CAEmitterLayer**.
- - По нажатию на кнопку должна срабатывать анимация**:**
- */
-
-
-// user тапнул, дергаем презентер - и запускаем анимацию
